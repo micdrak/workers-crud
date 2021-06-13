@@ -30,6 +30,16 @@ class InputValidator
 	 */
 	public function validateEmail(string $email): bool
 	{
-		return filter_var($email,VALIDATE_EMAIL);
+		return (bool) filter_var($email,FILTER_VALIDATE_EMAIL);
 	}
+
+	/**
+	 * @param string $phone
+	 * @return bool
+	 */
+	public function validatePhone(string $phone): bool
+	{
+		return (bool) preg_match('~^[+]?[()/0-9. -]{9,}$~', $phone, $matches);
+	}
+
 }

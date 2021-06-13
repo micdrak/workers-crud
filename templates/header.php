@@ -5,29 +5,25 @@ header('Content-Type: text/html; charset=utf-8');
 <head>
 	<meta charset="UTF-8">
 	<title>Seznam pracovníků Michal Slavík demo</title>
-
-	<link rel="stylesheet" href="../styl.css">
 </head>
-<body>
-<?php
 
-?>
 <style type="text/css">
-    .table {
-        display: table;
-    }
+	.table {
+		display: table;
+	}
+	.tr {
+		display: table-row;
+	}
+	.tr div {
+		display: table-cell;
+		border: 1px solid green;
+		padding: .4em;
+	}
 
-    ;
-    .tr {
-        display: table-row;
+	span {
+		font-weight: bold;
+	}
 
-    }
-
-    .tr div {
-        display: table-cell;
-    }
-
-    span {
-        font-weight: bold;
-    }
+	.insert_worker div { margin: .4em;}
 </style>
+<body>

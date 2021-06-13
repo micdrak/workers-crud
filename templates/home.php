@@ -4,7 +4,5 @@ include 'header.php';
 
 ?>
 
-Tady většiou bývá dashboard co zbytečně zatěžuje databázi.
+Tady většiou bývá přehledový dashboard co zbytečně zatěžuje databázi, ale tentorkát jen vybereme z menu :-)
 
-<?php
-include 'footer.php';

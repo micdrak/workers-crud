@@ -19,17 +19,11 @@ $db = new DatabaseConnection(
 $dataSourceFactory = new DataSourceFactory($db);
 $inputValidator = new InputValidator();
 
-// FIXME - mic print_r smazat
-$_GET['page'] = "position";
 
 $page = $_GET['page'] ?? 'HomePage';
 $action = $_GET['action'] ?? 'default';
 $presenterName = $page . 'Presenter';
 
-// FIXME - mic print_r smazat
-echo "<pre>" . print_r($_GET, true) . "</pre>";
-echo "post:";
-echo "<pre>" . print_r($_POST, true) . "</pre>";
 
 /** @var BasePresenter $presenter */
 $presenter = new $presenterName($dataSourceFactory, $inputValidator);

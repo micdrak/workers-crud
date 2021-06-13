@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-class WorkerPositonDbResource implements WorkerPositionResource
+class WorkerPositionDbResource implements WorkerPositionResource
 {
 	public function __construct(
 		private DatabaseConnection $db,
@@ -33,8 +33,8 @@ class WorkerPositonDbResource implements WorkerPositionResource
 		$positions = $this->db->getConnection()->query('
 			SELECT * FROM `workers_position`
 		')->fetchAll();
-		foreach ($positions as $positon) {
-			$result[] = new WorkerPosition(...$positon);
+		foreach ($positions as $position) {
+			$result[] = new WorkerPosition(...$position);
 		}
 
 		return $result;
@@ -42,7 +42,7 @@ class WorkerPositonDbResource implements WorkerPositionResource
 
 	public function save(WorkerPosition $workerPosition): bool
 	{
-		$data = [
+		$update = [
 			'id' => $workerPosition->getId(),
 			'updated_at' => $workerPosition->getUpdatedAt(),
 			'title' => $workerPosition->getTitle(),
@@ -55,7 +55,7 @@ class WorkerPositonDbResource implements WorkerPositionResource
 				WHERE id = :id
 			');
 
-			return $query->execute($data);
+			return $query->execute($update);
 		} catch (PDOException $e) {
 			//TODO nice message and logger interface
 			throw $e;
@@ -64,7 +64,7 @@ class WorkerPositonDbResource implements WorkerPositionResource
 
 	public function insert(WorkerPosition $workerPosition)
 	{
-		$data = [
+		$insert = [
 			'created_at' => $workerPosition->getCreatedAt(),
 			'updated_at' => $workerPosition->getUpdatedAt(),
 			'title' => $workerPosition->getTitle(),
@@ -76,8 +76,11 @@ class WorkerPositonDbResource implements WorkerPositionResource
 				INSERT INTO `workers_position` VALUES (NULL, :created_at, :updated_at, :title, :default_margin)
 			');
 
-			return $query->execute($data);
+			return $query->execute($insert);
 		} catch (PDOException $e) {
+			if ($e->errorInfo[1] == 1062) {
+				// duplicate entry, do something else
+			}
 			//TODO nice messages like unique constrain and logger interface
 			throw $e;
 		}
@@ -93,7 +96,7 @@ class WorkerPositonDbResource implements WorkerPositionResource
 			return $query->execute([$positionId]);
 
 		} catch (PDOException $e) {
-			//TODO foreign key
+			//TODO foreign key constraint nice message
 			throw $e;
 		}
 	}

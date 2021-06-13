@@ -54,9 +54,9 @@ class PositionPresenter extends BasePresenter
 		);
 		$result = $this->dataSourceFactory->getWorkerPositionDatabaseResource()->insert($position);
 
-		if ($result === true) {
-			header("Location: index.php?page=position&message=success");
-		}
+		$message = $result === true ? 'success' : 'error';
+
+		$this->redirectWithMessage($message);
 	}
 
 	public function actionDelete()
@@ -66,7 +66,7 @@ class PositionPresenter extends BasePresenter
 		$result = $this->dataSourceFactory->getWorkerPositionDatabaseResource()->delete($positionId);
 
 		if ($result === true) {
-			header("Location: index.php?page=position&message=deleted");
+			$this->redirectWithMessage('deleted');
 		}
 	}
 

@@ -11,7 +11,7 @@ class HomePagePresenter extends BasePresenter
 
 	public function actionDefault()
 	{
-		print $this->renderTemplate('home');
+		print $this->renderPage('home');
 	}
 
 }

@@ -13,7 +13,7 @@ interface WorkerPositionResource
 
 	public function save(WorkerPosition $workerPosition): bool;
 
-	public function insert(WorkerPosition $workerPosition);
+	public function insert(WorkerPosition $workerPosition): bool;
 
 	public function delete(int $positionId): bool;
 

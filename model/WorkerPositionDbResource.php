@@ -40,6 +40,10 @@ class WorkerPositionDbResource implements WorkerPositionResource
 		return $result;
 	}
 
+	/**
+	 * @param WorkerPosition $workerPosition
+	 * @return bool
+	 */
 	public function save(WorkerPosition $workerPosition): bool
 	{
 		$update = [
@@ -62,7 +66,11 @@ class WorkerPositionDbResource implements WorkerPositionResource
 		}
 	}
 
-	public function insert(WorkerPosition $workerPosition)
+	/**
+	 * @param WorkerPosition $workerPosition
+	 * @return bool
+	 */
+	public function insert(WorkerPosition $workerPosition): bool
 	{
 		$insert = [
 			'created_at' => $workerPosition->getCreatedAt(),
@@ -78,14 +86,18 @@ class WorkerPositionDbResource implements WorkerPositionResource
 
 			return $query->execute($insert);
 		} catch (PDOException $e) {
-			if ($e->errorInfo[1] == 1062) {
-				// duplicate entry, do something else
+			if ($e->errorInfo[1] === 1062) {
+				//TODO nice messages like unique constrain and logger interface
+				return false;
 			}
-			//TODO nice messages like unique constrain and logger interface
 			throw $e;
 		}
 	}
 
+	/**
+	 * @param int $positionId
+	 * @return bool
+	 */
 	public function delete(int $positionId): bool
 	{
 		try {
@@ -96,7 +108,10 @@ class WorkerPositionDbResource implements WorkerPositionResource
 			return $query->execute([$positionId]);
 
 		} catch (PDOException $e) {
-			//TODO foreign key constraint nice message
+			if ($e->errorInfo[1] === 1451) { // Cannot delete or update a parent row: a foreign key constraint fails
+				//TODO custom Exception with message translated to czech in template
+				return false;
+			}
 			throw $e;
 		}
 	}

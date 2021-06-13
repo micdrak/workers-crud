@@ -86,7 +86,7 @@ class WorkersPresenter extends BasePresenter
 		);
 		$result = $this->dataSourceFactory->getWorkerDatabaseResource()->insert($worker);
 
-		$message = $result === true ? 'success' : 'error';
+		$message = $result === true ? 'success' : 'Chyba při ukládání';
 
 		$this->redirectWithMessage($message);
 	}
@@ -97,11 +97,15 @@ class WorkersPresenter extends BasePresenter
 
 		$result = $this->dataSourceFactory->getWorkerDatabaseResource()->delete($workerId);
 
-		if ($result === true) {
-			$this->redirectWithMessage('deleted');
-		}
+		$message = $result === true ? 'deleted' : 'Chyba při mazání';
+
+		$this->redirectWithMessage($message);
 	}
 
+	/**
+	 * @param $margin
+	 * @return float|null
+	 */
 	private function resolveMargin($margin): float|null
 	{
 		$margin = floatval($margin);

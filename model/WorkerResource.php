@@ -13,7 +13,7 @@ interface WorkerResource
 
 	public function save(Worker $worker): bool;
 
-	public function insert(Worker $worker);
+	public function insert(Worker $worker): bool;
 
 	public function delete(int $sId): bool;
 

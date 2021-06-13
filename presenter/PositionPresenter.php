@@ -54,7 +54,7 @@ class PositionPresenter extends BasePresenter
 		);
 		$result = $this->dataSourceFactory->getWorkerPositionDatabaseResource()->insert($position);
 
-		$message = $result === true ? 'success' : 'error';
+		$message = $result === true ? 'success' : 'Nelze vložit duplicitní název';
 
 		$this->redirectWithMessage($message);
 	}
@@ -65,9 +65,9 @@ class PositionPresenter extends BasePresenter
 
 		$result = $this->dataSourceFactory->getWorkerPositionDatabaseResource()->delete($positionId);
 
-		if ($result === true) {
-			$this->redirectWithMessage('deleted');
-		}
+		$message = $result === true ? 'deleted' : 'Nelze smazat obsazenou pozici';
+
+		$this->redirectWithMessage($message);
 	}
 
 	/**

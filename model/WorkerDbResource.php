@@ -20,9 +20,9 @@ class WorkerDbResource implements WorkerResource
 			JOIN `workers_position` AS wp ON wp.id = w.position_id WHERE w.id = :id
 		');
 		$query->execute([$id]);
-		$result = $query->fetch();
+		$worker = $query->fetch();
 
-		return new Worker(...$result);
+		return new Worker(...$worker);
 	}
 
 	/**
@@ -42,6 +42,10 @@ class WorkerDbResource implements WorkerResource
 		return $result;
 	}
 
+	/**
+	 * @param Worker $worker
+	 * @return bool
+	 */
 	public function save(Worker $worker): bool
 	{
 		$update = [
@@ -72,17 +76,19 @@ class WorkerDbResource implements WorkerResource
 				WHERE id = :id
 			');
 
-			//return $query->execute($update);
-			$query->execute($update);
-			$query->debugDumpParams();
-			return true;
+			return $query->execute($update);
+
 		} catch (PDOException $e) {
 			//TODO nice message and logger interface
 			throw $e;
 		}
 	}
 
-	public function insert(Worker $worker)
+	/**
+	 * @param Worker $worker
+	 * @return bool
+	 */
+	public function insert(Worker $worker): bool
 	{
 		$insert = [
 			'position_id' => $worker->getPositionId(),
@@ -110,6 +116,10 @@ class WorkerDbResource implements WorkerResource
 		}
 	}
 
+	/**
+	 * @param int $Id
+	 * @return bool
+	 */
 	public function delete(int $Id): bool
 	{
 		try {

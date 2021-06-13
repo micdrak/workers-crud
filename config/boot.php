@@ -12,18 +12,17 @@ spl_autoload_register(function ($className) {
 	include $className . '.php';
 });
 
+// workaround insteadof generated Factory
 $db = new DatabaseConnection(
 	new DatabaseConfiguration()
 );
-
 $dataSourceFactory = new DataSourceFactory($db);
 $inputValidator = new InputValidator();
 
-
+// Next lines will be Router when grown up
 $page = $_GET['page'] ?? 'HomePage';
 $action = $_GET['action'] ?? 'default';
 $presenterName = $page . 'Presenter';
-
 
 /** @var BasePresenter $presenter */
 $presenter = new $presenterName($dataSourceFactory, $inputValidator);

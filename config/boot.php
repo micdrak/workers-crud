@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-
+mb_internal_encoding("UTF-8");
 set_include_path(
 	'database' . PATH_SEPARATOR .
 	'helpers' . PATH_SEPARATOR .
@@ -17,7 +17,9 @@ $db = new DatabaseConnection(
 );
 
 $dataSourceFactory = new DataSourceFactory($db);
+$inputValidator = new InputValidator();
 
+// FIXME - mic print_r smazat
 $_GET['page'] = "position";
 
 $page = $_GET['page'] ?? 'HomePage';
@@ -30,6 +32,5 @@ echo "post:";
 echo "<pre>" . print_r($_POST, true) . "</pre>";
 
 /** @var BasePresenter $presenter */
-$presenter = new $presenterName($dataSourceFactory);
+$presenter = new $presenterName($dataSourceFactory, $inputValidator);
 $presenter->callAction($action);
-//TODO handle bad requests

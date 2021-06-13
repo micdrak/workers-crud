@@ -15,4 +15,6 @@ interface WorkerPositionResource
 
 	public function insert(WorkerPosition $workerPosition);
 
+	public function delete(int $positionId): bool;
+
 }

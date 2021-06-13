@@ -1,5 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+header('Content-Type: text/html; charset=utf-8');
+?><!DOCTYPE html>
+<html lang="cs">
 <head>
 	<meta charset="UTF-8">
 	<title>Seznam pracovníků Michal Slavík demo</title>
@@ -18,13 +20,10 @@
     ;
     .tr {
         display: table-row;
+
     }
 
-    .tr input {
-        display: table-cell;
-    }
-
-    .tr span {
+    .tr div {
         display: table-cell;
     }
 

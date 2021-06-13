@@ -69,8 +69,6 @@ class WorkerPosition
 	 */
 	public function setTitle(string $title): WorkerPosition
 	{
-		$this->validateTitle($title) ?: throw new InvalidModelValueException('Invalid title');
-
 		$this->title = $title;
 		return $this;
 	}
@@ -89,32 +87,8 @@ class WorkerPosition
 	 */
 	public function setDefaultMargin(float $default_margin): WorkerPosition
 	{
-		if ($this->validateMargin($default_margin) === false) {
-			throw new InvalidModelValueException('Invalid margin specified');
-		}
-
 		$this->default_margin = $default_margin;
 		return $this;
-	}
-
-	/**
-	 * At least 2 characters required
-	 * @param string $title
-	 * @return bool
-	 */
-	public function validateTitle(string $title): bool
-	{
-		return strlen($title) > 1;
-	}
-
-	/**
-	 * More than zero required
-	 * @param float $margin
-	 * @return bool
-	 */
-	public function validateMargin(float $margin)
-	{
-		return $margin > 0;
 	}
 
 }

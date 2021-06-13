@@ -54,6 +54,7 @@ class WorkerPositonDbResource implements WorkerPositionResource
 				UPDATE `workers_position` SET updated_at = :updated_at, title = :title, default_margin = :default_margin
 				WHERE id = :id
 			');
+
 			return $query->execute($data);
 		} catch (PDOException $e) {
 			//TODO nice message and logger interface
@@ -74,9 +75,25 @@ class WorkerPositonDbResource implements WorkerPositionResource
 			$query = $this->db->getConnection()->prepare('
 				INSERT INTO `workers_position` VALUES (NULL, :created_at, :updated_at, :title, :default_margin)
 			');
+
 			return $query->execute($data);
 		} catch (PDOException $e) {
 			//TODO nice messages like unique constrain and logger interface
+			throw $e;
+		}
+	}
+
+	public function delete(int $positionId): bool
+	{
+		try {
+			$query = $this->db->getConnection()->prepare('
+				DELETE FROM `workers_position` WHERE id = ?
+			');
+
+			return $query->execute([$positionId]);
+
+		} catch (PDOException $e) {
+			//TODO foreign key
 			throw $e;
 		}
 	}
